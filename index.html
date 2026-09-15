@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TaskFlow</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                ✓
+            </div>
+
+            <div>
+                <h2>TaskFlow</h2>
+                <p>Smart planning</p>
+            </div>
+
+        </div>
+
+
+        <nav class="nav">
+
+            <button
+                class="nav-item active"
+                data-filter="today"
+            >
+                <span>📅</span>
+                Today
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-filter="all"
+            >
+                <span>📋</span>
+                All Tasks
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-filter="pending"
+            >
+                <span>⏳</span>
+                Pending
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-filter="completed"
+            >
+                <span>✅</span>
+                Completed
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-filter="finished"
+            >
+                <span>🏁</span>
+                Finished
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="themeBtn"
+                class="theme-btn"
+            >
+                🌙
+                <span>Dark Mode</span>
+            </button>
+
+
+            <p>
+                TaskFlow helps you organize
+                your tasks and reminders.
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <div class="eyebrow">
+                    SMART TASK PLANNER
+                </div>
+
+                <h1>
+                    Plan your day with TaskFlow
+                </h1>
+
+                <p>
+                    Organize your tasks, set reminders
+                    and track your progress.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📋
+                </div>
+
+                <div>
+                    <p>Today's Tasks</p>
+                    <h2 id="todayCount">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✅
+                </div>
+
+                <div>
+                    <p>Completed Today</p>
+                    <h2 id="completedCount">0</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="plan-title">
+
+            <div>
+
+                <div class="section-label">
+                    YOUR PLAN
+                </div>
+
+                <h2 id="pageTitle">
+                    Today's Tasks
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SEARCH + CREATE -->
+
+        <div class="toolbar">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search tasks..."
+                >
+
+            </div>
+
+
+            <button
+                id="createTaskBtn"
+                class="create-btn"
+            >
+                <span>+</span>
+                Create Task
+            </button>
+
+        </div>
+
+
+
+        <!-- TODAY VIEW -->
+
+        <section id="todayView">
+
+            <!-- DAILY TASKS -->
+
+            <div
+                id="dailySection"
+                class="task-section"
+            >
+
+                <div class="section-heading">
+
+                    <h3>
+                        🔄 Daily Routine
+
+                        <span
+                            id="dailyCount"
+                            class="count"
+                        >
+                            0
+                        </span>
+                    </h3>
+
+                </div>
+
+
+                <div
+                    id="dailyTasks"
+                    class="task-list"
+                ></div>
+
+            </div>
+
+
+
+            <!-- EXTRA TASKS -->
+
+            <div
+                id="extraSection"
+                class="task-section"
+            >
+
+                <div class="section-heading">
+
+                    <h3>
+                        📌 Extra Tasks
+
+                        <span
+                            id="extraCount"
+                            class="count"
+                        >
+                            0
+                        </span>
+                    </h3>
+
+                </div>
+
+
+                <div
+                    id="extraTasks"
+                    class="task-list"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- OTHER VIEWS -->
+
+        <section
+            id="singleView"
+            class="single-view"
+        >
+
+            <div
+                id="singleList"
+                class="task-list"
+            ></div>
+
+        </section>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="emptyState"
+            class="empty-state"
+        >
+
+            <div class="empty-icon">
+                📝
+            </div>
+
+            <h3>
+                No tasks found
+            </h3>
+
+            <p>
+                Your task list is empty.
+            </p>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- CREATE / EDIT MODAL -->
+
+    <div
+        id="taskModal"
+        class="modal"
+    >
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <div class="modal-label">
+                        TASK
+                    </div>
+
+                    <h2 id="modalTitle">
+                        Create a Task
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="closeTaskModal"
+                    class="close-btn"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <form id="taskForm">
+
+                <input
+                    type="hidden"
+                    id="editTaskId"
+                >
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="taskName">
+                        Task name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="taskName"
+                        placeholder="Example: Study Java"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- DATE -->
+
+                <div class="form-group">
+
+                    <label for="taskDate">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDate"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- REMINDER -->
+
+                <div class="form-group">
+
+                    <label for="taskTime">
+                        Reminder time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="taskTime"
+                    >
+
+                    <small>
+                        Leave empty if you don't need a reminder.
+                    </small>
+
+                </div>
+
+
+
+                <!-- PRIORITY -->
+
+                <div class="form-group">
+
+                    <label for="taskPriority">
+                        Priority
+                    </label>
+
+                    <select id="taskPriority">
+
+                        <option value="low">
+                            Low Priority
+                        </option>
+
+                        <option
+                            value="medium"
+                            selected
+                        >
+                            Medium Priority
+                        </option>
+
+                        <option value="high">
+                            High Priority
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TYPE -->
+
+                <div class="form-group">
+
+                    <label for="taskRepeat">
+                        Task type
+                    </label>
+
+                    <select id="taskRepeat">
+
+                        <option value="none">
+                            One-time Task
+                        </option>
+
+                        <option value="daily">
+                            Every Day
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div
+                    id="dailyInfo"
+                    class="info-box"
+                >
+                    🔄 This task will appear every day
+                    starting from the selected date.
+                </div>
+
+
+
+                <!-- DIFFICULTY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Difficulty
+                    </label>
+
+
+                    <div class="difficulty-group">
+
+                        <button
+                            type="button"
+                            class="difficulty"
+                            data-value="easy"
+                        >
+                            Easy
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="difficulty selected"
+                            data-value="medium"
+                        >
+                            Medium
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="difficulty"
+                            data-value="hard"
+                        >
+                            Hard
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelTask"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Task
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- REMINDER -->
+
+    <div
+        id="reminderModal"
+        class="modal"
+    >
+
+        <div class="reminder-box">
+
+            <div class="reminder-icon">
+                🔔
+            </div>
+
+            <div class="modal-label">
+                REMINDER
+            </div>
+
+            <h2 id="reminderTitle">
+                Task Reminder
+            </h2>
+
+            <p id="reminderText">
+                It's time for your task.
+            </p>
+
+            <button
+                id="dismissReminder"
+                class="save-btn reminder-btn"
+            >
+                Got it
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FINISH CONFIRMATION -->
+
+    <div
+        id="confirmModal"
+        class="modal"
+    >
+
+        <div class="confirm-box">
+
+            <div class="confirm-icon">
+                🏁
+            </div>
+
+            <h2>
+                Finish Task Permanently?
+            </h2>
+
+            <p id="confirmText">
+                This task will move to Finished.
+            </p>
+
+
+            <div class="form-buttons">
+
+                <button
+                    id="cancelConfirm"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    id="confirmFinish"
+                    class="save-btn"
+                >
+                    Finish Permanently
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
